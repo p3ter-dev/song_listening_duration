@@ -10,7 +10,7 @@ df = pd.read_csv(file_name)
 
 print("Dataset loaded:", df.shape)
 
-# Keep only reasonable durations: between 20 seconds to 10 minutes (20,000 to 600,000 ms)
+# between 20 seconds to 10 minutes (20,000 to 600,000 ms)
 df = df[(df["duration_ms"] > 20000) & (df["duration_ms"] < 600000)].copy()
 
 print("After outlier removal:", df.shape)
