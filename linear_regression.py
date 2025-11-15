@@ -15,7 +15,7 @@ df = df[(df["duration_ms"] > 20000) & (df["duration_ms"] < 600000)].copy()
 
 print("After outlier removal:", df.shape)
 
-# create dummy variables for the 'track_genre' column
+# create dummy binary variables for the 'track_genre' column
 df_dummies = pd.get_dummies(df, columns=['track_genre'], drop_first=True)
 
 # features from the old set, plus new ones found in the dataset
@@ -47,7 +47,7 @@ X_train_scaled = scaler.fit_transform(X_train)
 X_test_scaled = scaler.transform(X_test)
 
 # ridge regression
-model = Ridge(alpha=1.0) 
+model = Ridge(alpha=1.0)
 model.fit(X_train_scaled, y_train)
 
 # evaluate
@@ -56,9 +56,9 @@ y_pred = model.predict(X_test_scaled)
 mse = mean_squared_error(y_test, y_pred)
 r2 = r2_score(y_test, y_pred)
 
-print("\nMODEL PERFORMANCE (Fast Ridge with New Dataset & Genre):")
-print("MSE (on original scale):", f"{mse:,.2f}")
-print("R² Score (on original scale):", f"{r2:.4f}")
+print("\nMODEL PERFORMANCE:")
+print("MSE:", f"{mse:,.2f}")
+print("R² Score:", f"{r2:.4f}")
 plt.figure(figsize=(9, 7))
 plt.scatter(y_test, y_pred, alpha=0.3)
 plt.xlabel("Actual Duration (ms)")
