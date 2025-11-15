@@ -40,10 +40,6 @@ X_train, X_test, y_train, y_test = train_test_split(
     X, y, test_size=0.2, random_state=42
 )
 
-# ------------------------------------------------------------
-# 6. SCALE ALL FEATURES (Important for Ridge Regression)
-# ------------------------------------------------------------
-
 scaler = StandardScaler()
 
 # Fit scaler on training data and transform both sets
@@ -69,5 +65,5 @@ plt.xlabel("Actual Duration (ms)")
 plt.ylabel("Predicted Duration (ms)")
 plt.title("Actual vs Predicted Song Duration")
 plt.grid(True)
-plt.show()
 plt.savefig("ridge_predictions.png")
+plt.show()
