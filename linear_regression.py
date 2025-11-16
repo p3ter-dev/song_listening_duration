@@ -1,4 +1,5 @@
 import pandas as pd
+import numpy as np
 import matplotlib.pyplot as plt
 from sklearn.model_selection import train_test_split
 from sklearn.preprocessing import StandardScaler
@@ -9,7 +10,7 @@ df = pd.read_csv("dataset.csv")
 
 print("Dataset loaded:", df.shape)
 
-# between 20 seconds to 10 minutes (20,000 to 600,000 ms)
+# between 20 seconds to 10 minutes
 df = df[(df["duration_ms"] > 20000) & (df["duration_ms"] < 600000)].copy()
 
 print("After outlier removal:", df.shape)
@@ -17,7 +18,7 @@ print("After outlier removal:", df.shape)
 # create dummy binary variables for the 'track_genre' column
 df_dummies = pd.get_dummies(df, columns=['track_genre'], drop_first=True)
 
-# features from the theh dataset
+# features from the the dataset
 numerical_features = [
     "popularity", "danceability", "energy", "loudness", "speechiness", 
     "acousticness", "instrumentalness", "liveness", "valence", "tempo", 
@@ -60,9 +61,15 @@ print("MSE:", f"{mse:,.2f}")
 print("R² Score:", f"{r2:.4f}")
 plt.figure(figsize=(9, 7))
 plt.scatter(y_test, y_pred, alpha=0.3)
+
+# This line shows where a perfect prediction would be.
+min_val = np.min(y_test)
+max_val = np.max(y_test)
+plt.plot([min_val, max_val], [min_val, max_val], 'r--', linewidth=1)
+
 plt.xlabel("Actual Duration (ms)")
 plt.ylabel("Predicted Duration (ms)")
-plt.title("Actual vs Predicted Song Duration")
+plt.title("Actual vs Predicted Song Duration (with Reference Line)")
 plt.grid(True)
-plt.savefig("ridge_predictions.png")
+plt.savefig("ridge_predictions_with_line.png")
 plt.show()
