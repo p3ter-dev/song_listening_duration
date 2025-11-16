@@ -5,8 +5,7 @@ from sklearn.preprocessing import StandardScaler
 from sklearn.linear_model import Ridge 
 from sklearn.metrics import mean_squared_error, r2_score
 
-file_name = "dataset.csv"
-df = pd.read_csv(file_name)
+df = pd.read_csv("dataset.csv")
 
 print("Dataset loaded:", df.shape)
 
@@ -18,7 +17,7 @@ print("After outlier removal:", df.shape)
 # create dummy binary variables for the 'track_genre' column
 df_dummies = pd.get_dummies(df, columns=['track_genre'], drop_first=True)
 
-# features from the old set, plus new ones found in the dataset
+# features from the theh dataset
 numerical_features = [
     "popularity", "danceability", "energy", "loudness", "speechiness", 
     "acousticness", "instrumentalness", "liveness", "valence", "tempo", 
@@ -26,7 +25,7 @@ numerical_features = [
 ]
 target = "duration_ms"
 
-# Features now include numerical ones and all the new 'track_genre_' dummy columns
+# features include numerical ones and all the new 'track_genre_' dummy columns
 genre_cols = [col for col in df_dummies.columns if col.startswith('track_genre_')]
 features = numerical_features + genre_cols
 
@@ -42,7 +41,7 @@ X_train, X_test, y_train, y_test = train_test_split(
 
 scaler = StandardScaler()
 
-# Fit scaler on training data and transform both sets
+# fit scaler on training data and transform both sets
 X_train_scaled = scaler.fit_transform(X_train)
 X_test_scaled = scaler.transform(X_test)
 
